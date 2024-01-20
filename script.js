@@ -7,6 +7,8 @@ const preBtn = $(".btn-prev");
 const randomBtn = $(".fa-solid.fa-shuffle");
 const repeatBtn = $(".fa-solid.fa-repeat");
 
+progress.value = 0;
+
 const app = {
     currentIndex: 3,
     isPlaying: false,
@@ -86,7 +88,9 @@ const app = {
                         song.image
                     }')"></div>
                     <div class="content">
-                        <h3 style="font-size: 25px; font-weight: 700">${song.name}</h3>
+                        <h3 style="font-size: 25px; font-weight: 700">${
+                            song.name
+                        }</h3>
                         <p style="font-size: 20px">${song.singer}</p>
                     </div>
                 </div>
@@ -148,7 +152,10 @@ const app = {
         };
 
         audio.ontimeupdate = function () {
-            progress.value = (audio.duration === NaN) ? (audio.currentTime / audio.duration) * 100 : 0;
+            console.log(audio.duration);
+            if (audio.duration) {
+                progress.value = (audio.currentTime / audio.duration) * 100;
+            }
         };
 
         progress.onchange = function (e) {

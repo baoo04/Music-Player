@@ -148,8 +148,7 @@ const app = {
         };
 
         audio.ontimeupdate = function () {
-            const percent = (audio.currentTime / audio.duration) * 100;
-            progress.value = percent;
+            progress.value = (audio.duration === NaN) ? (audio.currentTime / audio.duration) * 100 : 0;
         };
 
         progress.onchange = function (e) {

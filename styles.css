@@ -1,0 +1,205 @@
+body {
+    font-size: 1.6rem;
+}
+
+.player {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.dashboard {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: fixed;
+    /* min-width: 100%;
+    max-width: 100%; */
+    width: 100%;
+    margin: auto;
+    top: 0;
+    background-color: #fff;
+    z-index: 5;
+    padding-bottom: 30px;
+}
+
+header {
+    text-align: center;
+    padding-top: 30px;
+}
+
+header h4 {
+    color: brown;
+    font-size: 30px;
+}
+
+header h2 {
+    font-weight: 700;
+    padding-bottom: 20px;
+    display: inline-block;
+    font-size: 40px;
+}
+
+i {
+    font-size: 40px;
+}
+
+.control {
+    padding-top: 20px;
+    display: flex;
+    gap: 40px;
+    padding-bottom: 20px;
+    align-items: center;
+}
+
+/* .cd {
+    width: 200px;
+    height: 200px;
+} */
+
+.cd {
+    border-radius: 50%;
+}
+
+input {
+    width: 90%;
+}
+
+.playlist {
+    display: flex;
+    flex-direction: column;
+    background: gainsboro;
+    margin-top: 548px;
+    width: 100%;
+    /* max-width: 80%;
+    min-width: 80%; */
+}
+
+.playlist .song {
+    padding: 20px 30px;
+    width: 90%;
+    border-radius: 10px;
+    margin-top: 20px;
+    align-self: center;
+    background-color: #fff;
+    /* max-width: 100%;
+    min-width: 100%; */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.playlist .song .group {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.playlist .song .content h3 {
+    font-size: 20px;
+}
+
+.playlist .song .icon {
+    width: 80px;
+    height: 80px;
+    background: red;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.fa-circle-play {
+    font-size: 70px;
+    color: crimson;
+    /* display: none; */
+}
+
+.fa-circle-pause {
+    font-size: 70px;
+    color: crimson;
+    display: none;
+}
+
+/* Reset các style mặc định của thanh trượt */
+input.progress {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 80%;
+    height: 10px;
+    border-radius: 5px;
+    background: #ddd;
+    outline: none;
+    padding: 0;
+    margin: 0;
+}
+
+input.progress::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 10px;
+    border-radius: 5px;
+    background: crimson;
+    cursor: pointer;
+}
+
+input.progress::-moz-range-thumb {
+    width: 20px;
+    height: 10px;
+    border-radius: 5px;
+    background: crimson;
+    cursor: pointer;
+}
+
+input.progress::-ms-thumb {
+    width: 20px;
+    height: 10px;
+    border-radius: 5px;
+    background: crimson;
+    cursor: pointer;
+}
+
+input.progress::-webkit-slider-runnable-track {
+    height: 10px;
+    border-radius: 5px;
+    background: beige;
+}
+
+input.progress::-moz-range-track {
+    height: 10px;
+    border-radius: 5px;
+    background: beige;
+}
+
+input.progress::-ms-track {
+    height: 10px;
+    border-radius: 5px;
+    background: beige;
+}
+
+img.cd {
+    transition: transform 0.5s ease-in-out;
+}
+
+.playing {
+    animation: rotate 5s linear infinite;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.active {
+    color: crimson;
+}
+
+.active-song {
+    color: crimson;
+    background-color: #000;
+}

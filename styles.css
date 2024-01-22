@@ -71,7 +71,8 @@ input {
     display: flex;
     flex-direction: column;
     background: gainsboro;
-    margin-top: 548px;
+    margin-top: 568px;
+    padding-top: 50px;
     width: 100%;
     /* max-width: 80%;
     min-width: 80%; */
@@ -201,5 +202,12 @@ img.cd {
 
 .active-song {
     color: crimson;
-    background-color: #000;
+    background: #000;
+}
+
+#time-display {
+    font-size: 20px;
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
 }

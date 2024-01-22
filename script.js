@@ -6,11 +6,13 @@ const nextBtn = $(".btn-next");
 const preBtn = $(".btn-prev");
 const randomBtn = $(".fa-solid.fa-shuffle");
 const repeatBtn = $(".fa-solid.fa-repeat");
+const curTime = $(".time");
+const total = $(".total");
 
 progress.value = 0;
 
 const app = {
-    currentIndex: 3,
+    currentIndex: 0,
     isPlaying: false,
     isRandom: false,
     isRepeat: false,
@@ -69,12 +71,6 @@ const app = {
             path: "./assets/music/SG.mp3",
             image: "./assets/img/SongGio.jpg",
         },
-        {
-            name: "Răng Khôn Fake",
-            singer: "Fake",
-            path: "./assets/music/RKFake.mp3",
-            image: "./assets/img/rangkhon.jpg",
-        },
     ],
 
     render: function () {
@@ -82,7 +78,7 @@ const app = {
             return `
             <div class="song d-flex align-items-center ${
                 index == app.currentIndex ? "active-song" : ""
-            }">
+            }" data-index="${index}">
                 <div class="group d-flex align-items-center py-10">
                     <div class="icon" style="background-image: url('${
                         song.image
@@ -152,10 +148,10 @@ const app = {
         };
 
         audio.ontimeupdate = function () {
-            console.log(audio.duration);
-            if (audio.duration) {
-                progress.value = (audio.currentTime / audio.duration) * 100;
-            }
+            progress.value = audio.duration
+                ? (audio.currentTime / audio.duration) * 100
+                : 0;
+            app.updateSongTime();
         };
 
         progress.onchange = function (e) {
@@ -164,6 +160,8 @@ const app = {
         };
 
         nextBtn.onclick = function () {
+            app.scrollToActiveSong();
+            CDanimation.play();
             if (app.isRandom) {
                 app.randomSong();
                 audio.play();
@@ -182,6 +180,8 @@ const app = {
         };
 
         preBtn.onclick = function () {
+            app.scrollToActiveSong();
+            CDanimation.play();
             if (app.isRandom) {
                 app.randomSong();
                 audio.play();
@@ -231,10 +231,21 @@ const app = {
                 repeatBtn.classList.remove("active");
             }
         };
+
+        playlist.onclick = function (e) {
+            const songElement = e.target.closest(".song:not(.active-song)");
+            if (songElement) {
+                console.log("dcm");
+                app.currentIndex = songElement.dataset.index;
+                app.loadCurrentSong();
+                audio.play();
+                app.render();
+            }
+        };
     },
 
     nextSong: function () {
-        app.currentIndex += 1;
+        app.currentIndex++;
         if (app.currentIndex >= app.songs.length) {
             app.currentIndex = 0;
         }
@@ -242,9 +253,12 @@ const app = {
     },
 
     prevSong: function () {
-        app.currentIndex -= 1;
-        if (app.currentIndex <= 0) {
+        if (app.currentIndex == 1) {
+            app.currentIndex = 0;
+        } else if (app.currentIndex == 0) {
             app.currentIndex = app.songs.length - 1;
+        } else {
+            app.currentIndex--;
         }
         app.loadCurrentSong();
     },
@@ -256,7 +270,6 @@ const app = {
         } while (index === app.currentIndex);
 
         app.currentIndex = index;
-        console.log(app.currentIndex);
         this.loadCurrentSong();
     },
 
@@ -268,6 +281,15 @@ const app = {
         }
         this.loadCurrentSong();
         audio.play();
+    },
+
+    scrollToActiveSong: function () {
+        setTimeout(() => {
+            $(".active-song").scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+            });
+        }, 300);
     },
 
     handleEvents: function () {
@@ -284,18 +306,29 @@ const app = {
         };
     },
 
+    updateSongTime: function () {
+        if (audio.duration) {
+            const totalTIme = audio.duration;
+            const x = audio.currentTime;
+            let totalMinutes = Math.floor(totalTIme / 60);
+            let totalSeconds = Math.floor(totalTIme % 60);
+            let currentMinutes = Math.floor(x / 60);
+            let currentSeconds = Math.floor(x % 60);
+            curTime.textContent = `${currentMinutes}:${currentSeconds}`;
+            total.textContent = `${totalMinutes}:${totalSeconds}`;
+        }
+    },
+
     start: function () {
-        //Dinh nghia thuoc tinh
         this.defineProperties();
 
-        //Xu ly cac hanh dong
-        this.handleEvents();
+        // this.handleEvents()   không gọi hàm này để cho giao diện nhìn trực quan hơn;
         this.loadCurrentSong();
         this.playSong();
         this.nextSong();
         this.prevSong();
         this.randomSong();
-        //Render
+
         this.render();
     },
 };
